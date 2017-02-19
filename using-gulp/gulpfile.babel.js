@@ -3,98 +3,81 @@ import sass from "gulp-sass";
 import sourcemaps from "gulp-sourcemaps";
 import rename from "gulp-rename";
 import babel from "gulp-babel";
-import browserify from "gulp-browserify";
 import nodemon from "gulp-nodemon";
-import runSequence from "gulp-run-sequence";
-import minify from "gulp-minify";
 import del from "del";
+import source from "vinyl-source-stream";
+import buffer from "vinyl-buffer";
+import browserify from "browserify";
+import babelify from "babelify";
+import uglify from "gulp-uglify";
+import gulpif from "gulp-if";
 
-gulp.task("clean", () => {
-    return del.sync("dist", { force: true });
-});
+const isProductiveBuild = false;
+
+if (isProductiveBuild) {
+    process.env.NODE_ENV = 'production';
+}
+
+const clean = () => del(["dist"]);
 
 
-gulp.task("static:server", () => {
+function server_static() {
     return gulp.src(["server/**/*", "!server/**/*.js"])
         .pipe(gulp.dest("dist/server"));
-});
-gulp.task("watch:static:server", () => {
-    return gulp.watch(["server/**/*", "!server/**/*.js"], ["static:server"]);
-});
+}
 
-gulp.task("babel:server", () => {
+function server_transpile() {
     return gulp.src("server/*.js")
-        .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(sourcemaps.write())
+        .pipe(gulpif(!isProductiveBuild, sourcemaps.init()))
+        .pipe(babel({ minified: isProductiveBuild }))
+        .pipe(gulpif(!isProductiveBuild, sourcemaps.write()))
         .pipe(gulp.dest("dist/server"));
-});
-gulp.task("watch:babel:server", () => {
-    return gulp.watch("server/*.js", ["babel:server"]);
-});
+}
 
-gulp.task("server", ["babel:server", "static:server"]);
-gulp.task("watch:server", ["watch:static:server", "watch:babel:server"]);
+const server = gulp.parallel(server_static, server_transpile);
 
 
-
-gulp.task("scss", () => {
+function scss() {
     return gulp.src("public/main.scss")
         .pipe(sourcemaps.init())
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(sourcemaps.write())
         .pipe(rename("main.min.css"))
         .pipe(gulp.dest("dist/public"));
-});
-gulp.task("watch:scss", () => {
-    gulp.watch("public/main.scss", ["scss"]);
-});
+}
 
-gulp.task("static:client", () => {
+function client_static() {
     return gulp.src(["public/**/*", "!public/**/*.jsx", "!public/**/*.scss"])
         .pipe(gulp.dest("dist/public"));
-});
-gulp.task("watch:static:client", () => {
-    return gulp.watch(["public/**/*", "!public/**/*.jsx", "!public/**/*.scss"], ["static:client"]);
-});
+}
 
-gulp.task("babel:client", () => {
-    return gulp.src("public/*.jsx")
-        .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest("dist/public/tmp"));
-});
-gulp.task("browserify", ["babel:client"], () => {
-    return gulp.src("dist/public/tmp/app.js")
-        .pipe(browserify())
-        .pipe(minify())
+function client_transpile() {
+    return browserify({ entries: 'public/app.jsx', extensions: ['.jsx'], debug: !isProductiveBuild })
+        .transform(babelify)
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe(gulpif(isProductiveBuild, uglify()))
         .pipe(rename("bundle.js"))
-        .pipe(gulp.dest("dist/public"));
-});
-gulp.task("watch:browserify", () => {
-    return gulp.watch("public/*.jsx", ["browserify"]);
-});
+        .pipe(gulp.dest('dist/public'));
+}
 
-gulp.task("client", ["browserify", "static:client", "scss"], () => {
-    return del.sync("dist/public/tmp", { force: true });
-});
-gulp.task("watch:client", ["watch:static:client", "watch:browserify", "watch:scss"]);
+const client = gulp.parallel(client_static, client_transpile, scss);
 
-
-
-gulp.task("build", (done) => {
-    return runSequence("clean", "client", "server", done);
-});
-
-gulp.task("start", ["build"], () => {
+function start_server() {
     return nodemon({
         script: "dist/server/index.js"
     });
-});
+}
 
-gulp.task("watch", ["watch:client", "watch:server"]);
+function watch() {
+    gulp.watch("public/main.scss", scss);
+    gulp.watch(["server/**/*", "!server/**/*.js"], server_static);
+    gulp.watch("server/*.js", server_transpile);
+    gulp.watch(["public/**/*", "!public/**/*.jsx", "!public/**/*.scss"], client_static);
+    gulp.watch("public/*.jsx", client_transpile);
+}
 
-gulp.task("dev", (done) => {
-    return runSequence("start", "watch", done);
-});
+export const build = gulp.series(clean, gulp.parallel(server, client));
+export const start = gulp.series(build, start_server);
+export const dev = gulp.parallel(start, watch);
