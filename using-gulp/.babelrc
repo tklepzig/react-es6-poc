@@ -1,6 +1,22 @@
 {
     "presets": [
         "es2015",
+        "stage-3",
         "react"
+    ],
+    "plugins": [
+        [
+            "babel-plugin-root-import",
+            [
+                {
+                    "rootPathPrefix": "~",
+                    "rootPathSuffix": "public/components"
+                },
+                {
+                    "rootPathPrefix": "services",
+                    "rootPathSuffix": "public/services"
+                }
+            ]
+        ]
     ]
 }

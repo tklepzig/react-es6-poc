@@ -3,10 +3,11 @@ import http from "http";
 import path from "path";
 
 const app = express();
-const httpServer = http.Server(app);
+const httpServer = http.createServer(app);
+const port = process.env.PORT || 8080;
 
 app.use("/", express.static(path.resolve(__dirname + "/../public")));
 
-httpServer.listen(8080, function () {
-    console.log("listening on *:8080");
+httpServer.listen(port, () => {
+    console.log(`listening on *:${port}`);
 });
