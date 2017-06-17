@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "gulp": "gulp",
-    "start": "node dist/server/index.js"
+    "start": "node dist/server/index.js",
+    "test": "mocha \"src/**/*.spec.js\" --compilers js:babel-core/register --reporter mochawesome"
   },
   "dependencies": {
     "express": "^4.14.0"
@@ -16,6 +17,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
+    "chai": "^4.0.2",
     "del": "^2.2.2",
     "eslint": "^3.15.0",
     "eslint-plugin-react": "^6.10.0",
@@ -29,9 +31,12 @@
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.8",
+    "mocha": "^3.4.2",
+    "mochawesome": "^2.2.1",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "sinon": "^2.3.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "yargs": "^8.0.1"
