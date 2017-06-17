@@ -10,11 +10,11 @@
             [
                 {
                     "rootPathPrefix": "~",
-                    "rootPathSuffix": "public/components"
+                    "rootPathSuffix": "src/public/components"
                 },
                 {
                     "rootPathPrefix": "services",
-                    "rootPathSuffix": "public/services"
+                    "rootPathSuffix": "src/public/services"
                 }
             ]
         ]

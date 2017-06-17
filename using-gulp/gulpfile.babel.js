@@ -36,12 +36,12 @@ const clean = () => del(["dist"]);
 
 
 function server_static() {
-    return gulp.src(["server/**/*", "!server/**/*.js"])
+    return gulp.src(["src/server/**/*", "!src/server/**/*.js"].concat((isProductiveBuild ? ["!src/server/config.json"] : [])))
         .pipe(gulp.dest("dist/server"));
 }
 
 function server_transpile() {
-    return gulp.src("server/*.js")
+    return gulp.src("src/server/*.js")
         .pipe(gulpif(!isProductiveBuild, sourcemaps.init()))
         .pipe(babel({ minified: isProductiveBuild }))
         .pipe(gulpif(!isProductiveBuild, sourcemaps.write()))
@@ -52,32 +52,33 @@ const server = gulp.parallel(server_static, server_transpile);
 
 
 function scss() {
-    return gulp.src("public/app.scss")
+    return gulp.src("src/public/app.scss")
         .pipe(gulpif(!isProductiveBuild, sourcemaps.init()))
-        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+        .pipe(gulpif(isProductiveBuild, sass({ outputStyle: "compressed" }).on("error", sass.logError)))
+        .pipe(gulpif(!isProductiveBuild, sass().on("error", sass.logError)))
         .pipe(gulpif(!isProductiveBuild, sourcemaps.write()))
         .pipe(rename("app.css"))
         .pipe(gulp.dest("dist/public"));
 }
 
 function client_static() {
-    return gulp.src(["public/**/*", "!public/**/*.jsx", "!public/**/*.scss"])
+    return gulp.src(["src/public/**/*", "!src/public/**/*.jsx", "!src/public/**/*.scss"])
         .pipe(gulp.dest("dist/public"));
 }
 
 function client_transpile() {
-    return browserify({ entries: 'public/app.jsx', extensions: ['.jsx'], debug: !isProductiveBuild })
+    return browserify({ entries: "src/public/app.jsx", extensions: [".jsx"], debug: !isProductiveBuild })
         .transform(babelify)
         .bundle()
         .on("error", function (error) {
             gutil.log(`Error: ${error.toString()}`);
             this.emit("end");
         })
-        .pipe(source('app.js'))
+        .pipe(source("app.js"))
         .pipe(buffer())
         .pipe(gulpif(isProductiveBuild, uglify()))
         .pipe(rename("app.js"))
-        .pipe(gulp.dest('dist/public'));
+        .pipe(gulp.dest("dist/public"));
 }
 
 const client = gulp.parallel(client_static, client_transpile, scss);
@@ -89,11 +90,11 @@ function start_server() {
 }
 
 function watch() {
-    gulp.watch("public/**/*.scss", scss);
-    gulp.watch(["server/**/*", "!server/**/*.js"], server_static);
-    gulp.watch("server/**/*.js", server_transpile);
-    gulp.watch(["public/**/*", "!public/**/*.jsx", "!public/**/*.scss"], client_static);
-    gulp.watch("public/**/*.jsx", client_transpile);
+    gulp.watch("src/public/**/*.scss", scss);
+    gulp.watch(["src/server/**/*", "!src/server/**/*.js"], server_static);
+    gulp.watch("src/server/**/*.js", server_transpile);
+    gulp.watch(["src/public/**/*", "!src/public/**/*.jsx", "!src/public/**/*.scss"], client_static);
+    gulp.watch("src/public/**/*.jsx", client_transpile);
 }
 
 export const build = gulp.series(clean, gulp.parallel(server, client));
