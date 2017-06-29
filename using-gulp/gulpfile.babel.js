@@ -35,6 +35,11 @@ gulp.src = (...args) => _gulpsrc(...args).pipe(plumber({
 const clean = () => del(["dist"]);
 
 
+function package_json() {
+    return gulp.src(["package.json"])
+        .pipe(gulp.dest("dist"));
+}
+
 function server_static() {
     return gulp.src(["src/server/**/*", "!src/server/**/*.js"].concat((isProductiveBuild ? ["!src/server/config.json"] : [])))
         .pipe(gulp.dest("dist/server"));
@@ -97,6 +102,6 @@ function watch() {
     gulp.watch("src/public/**/*.jsx", client_transpile);
 }
 
-export const build = gulp.series(clean, gulp.parallel(server, client));
+export const build = gulp.series(clean, gulp.parallel(server, client, package_json));
 export const start = gulp.series(build, start_server);
 export const dev = gulp.parallel(start, watch);
