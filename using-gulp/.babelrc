@@ -13,7 +13,7 @@
                     "rootPathSuffix": "src/public/components"
                 },
                 {
-                    "rootPathPrefix": "services",
+                    "rootPathPrefix": "#",
                     "rootPathSuffix": "src/public/services"
                 }
             ]
