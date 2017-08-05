@@ -46,7 +46,7 @@ function server_static() {
 }
 
 function server_transpile() {
-    return gulp.src("src/server/*.js")
+    return gulp.src("src/server/**/*.js")
         .pipe(gulpif(!isProductiveBuild, sourcemaps.init()))
         .pipe(babel({ minified: isProductiveBuild }))
         .pipe(gulpif(!isProductiveBuild, sourcemaps.write()))
