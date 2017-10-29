@@ -1,4 +1,4 @@
-# A set of Proof of Concepts for React with ES 2015
+# A set of minimal React samples with ES 2015 & Typescript from scratch
 
 This repo contains a set of React samples with minimal effort from scratch:
 
