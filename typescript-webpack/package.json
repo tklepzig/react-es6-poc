@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "dev-client": "webpack -w",
+    "dev-server": "nodemon dist/server/index.js",
+    "dev": "run-p dev-client dev-server"
+  },
   "dependencies": {
     "express": "^4.16.2"
   },
@@ -9,11 +14,14 @@
     "@types/react-dom": "^16.0.2",
     "awesome-typescript-loader": "^3.2.3",
     "copy-webpack-plugin": "^4.2.0",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "tslint": "^5.8.0",
     "typescript": "^2.5.3",
     "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3",
     "webpack-node-externals": "^1.6.0"
   }
 }
