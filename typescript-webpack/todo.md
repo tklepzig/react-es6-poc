@@ -1,0 +1,2 @@
+- scss2css w/ bundling
+- HMR (react & node) (like nodemon)
