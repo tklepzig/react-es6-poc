@@ -10,5 +10,3 @@ This repo contains a set of React samples with minimal effort from scratch:
 ## Typescript
 1. [Without any build system, only with some npm scripts](https://github.com/tklepzig/react-es6-poc/tree/master/typescript-npm-scripts)
 
-
-It will be filled with more samples and other build systems (webpack, etc.) in future.
