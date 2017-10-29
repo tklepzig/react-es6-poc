@@ -1,32 +1,58 @@
-const nodeExternals = require('webpack-node-externals');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var path = require('path');
+const path = require('path');
 
+const nodeExternals = require('webpack-node-externals');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin({
+    filename: "app.[contenthash].css"
+});
 
 module.exports = [{
     entry: "./src/public/app.tsx",
     output: {
-        filename: "app.js",
+        filename: "app.[chunkhash].js",
         path: __dirname + "/dist/public"
     },
 
-    // Enable sourcemaps for debugging webpack's output.
     devtool: "inline-source-map",
 
     resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
 
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" }
+            {
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader"
+            },
+            {
+                test: /\.scss$/,
+                use: extractSass.extract({
+                    use: [{
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader"
+                    }]
+                })
+            }
         ]
     },
 
     plugins: [
-        new CopyWebpackPlugin([{ from: "./src/public/index.html" }])
+        // new CopyWebpackPlugin([
+        //     { from: "./src/public/index.html" }
+        // ]),
+        new CleanWebpackPlugin(["./dist"]),
+        extractSass,
+        new HtmlWebpackPlugin({
+            template: "./src/public/index.html",
+            inject: "body"
+        })
     ]
 
     // // When importing a module whose path matches one of the following, just
