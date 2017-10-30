@@ -28,6 +28,7 @@ module.exports = [{
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
+                exclude: /node_modules/,
                 loader: "awesome-typescript-loader"
             },
             {
@@ -75,7 +76,11 @@ module.exports = [{
     externals: [nodeExternals()],
     module: {
         rules: [
-            { test: /\.ts$/, loader: "awesome-typescript-loader" }
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: "awesome-typescript-loader"
+            }
         ]
     }
 }];

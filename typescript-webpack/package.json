@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev-client": "webpack -w",
+    "dev-client": "webpack -w --progress --color",
     "dev-server": "nodemon dist/server/index.js",
     "dev": "run-p dev-client dev-server"
   },
@@ -27,7 +27,6 @@
     "tslint": "^5.8.0",
     "typescript": "^2.5.3",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3",
     "webpack-node-externals": "^1.6.0"
   }
 }
