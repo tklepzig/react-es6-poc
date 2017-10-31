@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "dev-client": "webpack -w --progress --color",
+    "dev-client": "webpack --config webpack.dev.js -w --progress --color",
     "dev-server": "nodemon dist/server/index.js",
-    "dev": "run-p dev-client dev-server"
+    "dev": "run-p dev-client dev-server",
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "express": "^4.16.2"

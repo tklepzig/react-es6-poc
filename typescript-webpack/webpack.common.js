@@ -53,22 +53,14 @@ const client = {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
                 loader: "awesome-typescript-loader"
-            },
-            {
-                test: /\.scss$/,
-                use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader"
-                    }, {
-                        loader: "sass-loader"
-                    }]
-                })
             }
         ]
     },
 
     plugins: [
-        extractSass,
+        new ExtractTextPlugin({
+            filename: "app.[contenthash].css"
+        }),
         new HtmlWebpackPlugin({
             template: "./src/public/index.html",
             inject: "body"
