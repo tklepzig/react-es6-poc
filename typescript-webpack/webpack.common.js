@@ -66,6 +66,7 @@ const client = {
                 from: "./src/public/assets",
                 to: "assets"
             },
+            { from: "./src/public/manifest.json" }
         ])
     ]
 
