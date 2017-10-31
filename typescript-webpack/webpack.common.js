@@ -60,7 +60,13 @@ const client = {
         new HtmlWebpackPlugin({
             template: "./src/public/index.html",
             inject: "body"
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: "./src/public/assets",
+                to: "assets"
+            },
+        ])
     ]
 
     // // When importing a module whose path matches one of the following, just
