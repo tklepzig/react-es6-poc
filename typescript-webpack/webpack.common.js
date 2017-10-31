@@ -5,10 +5,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-const extractSass = new ExtractTextPlugin({
-    filename: "app.[contenthash].css"
-});
-
 const server = {
     entry: "./src/server/index.ts",
     output: {
