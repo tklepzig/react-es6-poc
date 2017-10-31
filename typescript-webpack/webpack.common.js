@@ -1,23 +1,47 @@
-const path = require('path');
-
-const nodeExternals = require('webpack-node-externals');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const nodeExternals = require("webpack-node-externals");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const extractSass = new ExtractTextPlugin({
     filename: "app.[contenthash].css"
 });
 
-module.exports = [{
+const server = {
+    entry: "./src/server/index.ts",
+    output: {
+        filename: "index.js",
+        path: __dirname + "/dist/server"
+    },
+    target: "node",
+    node: { __dirname: false },
+    externals: [nodeExternals()],
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: "awesome-typescript-loader"
+            }
+        ]
+    },
+    plugins: [
+        new CleanWebpackPlugin(["./dist"]),
+        new CopyWebpackPlugin([
+            { from: "./package.json" },
+            { from: "./yarn.lock" }
+        ])
+    ]
+};
+
+const client = {
     entry: "./src/public/app.tsx",
     output: {
         filename: "app.[chunkhash].js",
         path: __dirname + "/dist/public"
     },
-
-    devtool: "inline-source-map",
 
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
@@ -25,7 +49,6 @@ module.exports = [{
 
     module: {
         rules: [
-            // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
@@ -45,10 +68,6 @@ module.exports = [{
     },
 
     plugins: [
-        // new CopyWebpackPlugin([
-        //     { from: "./src/public/index.html" }
-        // ]),
-        new CleanWebpackPlugin(["./dist"]),
         extractSass,
         new HtmlWebpackPlugin({
             template: "./src/public/index.html",
@@ -64,23 +83,7 @@ module.exports = [{
     //     "react": "React",
     //     "react-dom": "ReactDOM"
     // }
-},
-{
-    entry: "./src/server/index.ts",
-    output: {
-        filename: 'index.js',
-        path: __dirname + "/dist/server"
-    },
-    target: 'node',
-    node: { __dirname: false },
-    externals: [nodeExternals()],
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                loader: "awesome-typescript-loader"
-            }
-        ]
-    }
-}];
+};
+
+const common = { server, client };
+module.exports = common;
