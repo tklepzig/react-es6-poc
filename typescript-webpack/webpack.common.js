@@ -7,13 +7,22 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const server = {
     entry: "./src/server/index.ts",
+
     output: {
         filename: "index.js",
         path: __dirname + "/dist/server"
     },
+
+    resolve: {
+        extensions: [".ts", ".js"]
+    },
+
     target: "node",
+
     node: { __dirname: false },
+
     externals: [nodeExternals()],
+
     module: {
         rules: [
             {
@@ -23,6 +32,7 @@ const server = {
             }
         ]
     },
+
     plugins: [
         new CleanWebpackPlugin(["./dist"]),
         new CopyWebpackPlugin([
