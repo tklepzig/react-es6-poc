@@ -1,11 +1,9 @@
 {
+    "extends": [
+        "tslint:latest",
+        "tslint-react"
+    ],
     "rules": {
-        "arrow-parens": false,
-        "arrow-return-shorthand": true,
-        "quotemark": [
-            true,
-            "double"
-        ],
-        "prefer-template": true
+        "no-implicit-dependencies": false
     }
 }
