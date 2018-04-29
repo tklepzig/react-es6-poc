@@ -6,17 +6,7 @@
     "outDir": "dist",
     "strict": true,
     "strictNullChecks": true,
-    "baseUrl": "src/public",
-    "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@models/*": [
-        "models/*"
-      ],
-      "@services/*": [
-        "services/*"
-      ]
-    }
+    "baseUrl": ".",
+    "experimentalDecorators": true
   }
 }

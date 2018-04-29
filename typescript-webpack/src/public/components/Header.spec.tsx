@@ -1,6 +1,6 @@
-import { Header } from "./Header";
-import { mount, configure, shallow } from "enzyme";
+import { configure, mount, shallow } from "enzyme";
 import * as React from "react";
+import { Header } from "./Header";
 
 describe("Header", () => {
     const header = mount(<Header text="Test" />);

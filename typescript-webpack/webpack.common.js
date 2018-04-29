@@ -15,7 +15,10 @@ const server = {
     },
 
     resolve: {
-        extensions: [".ts", ".js"]
+        extensions: [".ts", ".js"],
+        plugins: [new TsconfigPathsPlugin({
+            configFile: "./src/server/tsconfig.json"
+        })]
     },
 
     target: "node",
@@ -29,7 +32,10 @@ const server = {
             {
                 test: /\.ts$/,
                 exclude: /node_modules/,
-                loader: "awesome-typescript-loader"
+                loader: "awesome-typescript-loader",
+                options: {
+                    configFileName: './src/server/tsconfig.json'
+                }
             }
         ]
     },
@@ -64,7 +70,10 @@ const client = {
     },
 
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".json"]
+        extensions: [".ts", ".tsx", ".js", ".json"],
+        plugins: [new TsconfigPathsPlugin({
+            configFile: "./src/public/tsconfig.json"
+        })]
     },
 
     module: {
@@ -72,7 +81,10 @@ const client = {
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
-                loader: "awesome-typescript-loader"
+                loader: "awesome-typescript-loader",
+                options: {
+                    configFileName: './src/public/tsconfig.json'
+                }
             }
         ]
     },
@@ -92,8 +104,7 @@ const client = {
             },
             { from: "./src/public/manifest.json" },
             { from: "./src/public/favicon.ico" }
-        ]),
-        new TsconfigPathsPlugin()
+        ])
     ]
 
     // // When importing a module whose path matches one of the following, just
