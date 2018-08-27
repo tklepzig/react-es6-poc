@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev-client": "webpack --config webpack.dev.js -w --progress --color",
-    "dev-server": "nodemon dist/server/index.js",
-    "dev": "run-p dev-client dev-server",
+    "build:watch": "webpack --config webpack.dev.js -w --progress --color",
+    "start:watch": "nodemon dist/server/index.js",
+    "dev": "run-p build:watch start:watch",
     "build": "webpack --config webpack.prod.js",
     "start": "node dist/server/index.js"
   },
