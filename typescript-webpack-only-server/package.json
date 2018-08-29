@@ -1,0 +1,41 @@
+{
+  "scripts": {
+    "build:watch": "webpack --config webpack.dev.js -w --progress --color",
+    "start:watch": "nodemon dist/index.js",
+    "dev": "run-p build:watch start:watch",
+    "build": "webpack --config webpack.prod.js",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.1",
+    "@types/node": "^10.9.3",
+    "awesome-typescript-loader": "^5.2.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.3",
+    "npm-run-all": "^4.1.3",
+    "ts-jest": "^23.1.4",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
+  }
+}
