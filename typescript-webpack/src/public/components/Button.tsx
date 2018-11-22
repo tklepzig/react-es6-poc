@@ -1,7 +1,7 @@
 import * as React from "react";
 import { bind } from "react.ex";
 
-export default class App extends React.Component {
+export class Button extends React.Component {
 
     public render() {
         return <button onClick={this.onClick}>Click</button>;
