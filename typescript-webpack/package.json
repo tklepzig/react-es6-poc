@@ -4,7 +4,7 @@
     "start:watch": "nodemon dist/server/index.js",
     "dev": "run-p build:watch start:watch",
     "build": "webpack --config webpack.prod.js",
-    "start": "node dist/server/index.js"
+    "start": "node server/index.js"
   },
   "dependencies": {
     "express": "^4.16.3"
