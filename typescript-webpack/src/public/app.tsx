@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 
 ReactDOM.render((
     <>
-        <Header text="Hello React!" />
+        <Header text="Test" />
         <GlobalStyle />
     </>),
     document.getElementById("root"));

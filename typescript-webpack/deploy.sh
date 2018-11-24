@@ -81,18 +81,6 @@ exitWithMessageOnError "Kudu Sync failed"
 # 2. Select node version
 selectNodeVersion
 
-# 3. Install Yarn
-echo "Verifying Yarn Install"
-eval $NPM_CMD install yarn -g
-
-# 4. Install npm packages
-if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  eval /d/local/AppData/npm/yarn install --production
-  exitWithMessageOnError "npm failed"
-  cd - > /dev/null
-fi
-
 #cd "$DEPLOYMENT_SOURCE"
 #git rev-parse --short HEAD > "$DEPLOYMENT_TARGET/public/version.txt"
 
