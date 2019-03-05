@@ -1,0 +1,57 @@
+{
+  "scripts": {
+    "build:watch": "webpack --config webpack.dev.js -w --progress --color",
+    "start:watch": "webpack-dev-server --config webpack.dev.js --open",
+    "dev": "run-p build:watch start:watch",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@hot-loader/react-dom": "^16.8.3",
+    "@types/enzyme": "^3.1.13",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
+    "@types/jest": "^23.3.1",
+    "@types/react": "^16.4.12",
+    "@types/react-dom": "^16.0.7",
+    "@types/styled-components": "^4.1.1",
+    "awesome-typescript-loader": "^5.2.0",
+    "clean-webpack-plugin": "^1.0.0",
+    "copy-webpack-plugin": "^4.5.2",
+    "enzyme": "^3.5.0",
+    "enzyme-adapter-react-16": "^1.3.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.5.0",
+    "npm-run-all": "^4.1.3",
+    "polished": "^2.3.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-hot-loader": "^4.7.2",
+    "styled-components": "^4.1.1",
+    "terser-webpack-plugin": "^1.1.0",
+    "ts-jest": "^23.1.4",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "tslint": "^5.11.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.1.4"
+  },
+  "jest": {
+    "setupFiles": [
+      "./jestsetup.ts"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
+}
