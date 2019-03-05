@@ -1,15 +1,20 @@
 import * as React from "react";
-import { bind } from "react.ex";
+import styled from "styled-components";
 
-export class Button extends React.Component {
-  public render() {
-    return <button onClick={this.onClick}>Click 2</button>;
-  }
+const StyledButton = styled.button`
+  background: #cc6e06;
+  font-size: 1.5rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+`;
 
-  @bind
-  private onClick() {
-    // tslint:disable-next-line:no-console
-    console.dir(this);
+export const Button: React.FunctionComponent = ({ children }) => {
+  const onClick = () => {
     alert("Click!");
-  }
-}
+  };
+
+  return <StyledButton onClick={onClick}>{children}</StyledButton>;
+};

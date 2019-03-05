@@ -1,10 +1,11 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import styled from "styled-components";
-import { Button } from "./Button";
 
 const StyledHeader = styled.h1`
-  color: blue;
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 1rem;
 `;
 
 export interface HeaderProps {
@@ -12,11 +13,7 @@ export interface HeaderProps {
 }
 
 const RawHeader: React.SFC<HeaderProps> = (props) => (
-  <StyledHeader>
-    {props.text}
-    <Button />
-  </StyledHeader>
+  <StyledHeader>{props.text}</StyledHeader>
 );
-RawHeader.displayName = "Header";
 
 export const Header = hot(module)(RawHeader);
