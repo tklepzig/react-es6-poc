@@ -2,11 +2,13 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "outDir": "dist",
     "paths": {
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@models/*": ["models/*"],
       "@services/*": ["services/*"]
-    }
+    },
+    "types": ["jest"]
   }
 }

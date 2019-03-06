@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../node_modules",
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "types": ["cypress"]
+  }
+}

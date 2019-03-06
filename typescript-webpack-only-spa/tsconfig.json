@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
+    "target": "es6",
     "module": "commonjs",
-    "jsx": "react",
-    "outDir": "dist",
     "strict": true,
     "strictNullChecks": true,
     "baseUrl": ".",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "jsx": "react"
   }
 }
