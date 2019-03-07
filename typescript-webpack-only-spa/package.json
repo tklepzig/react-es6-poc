@@ -2,8 +2,8 @@
   "scripts": {
     "build:watch": "webpack --config webpack.dev.js -w --progress --color",
     "start:watch": "webpack-dev-server --config webpack.dev.js --open",
-    "test:watch": "cypress open",
-    "dev": "run-p build:watch start:watch test:watch",
+    "test:e2e:watch": "cypress open",
+    "dev": "run-p build:watch start:watch",
     "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {},
@@ -49,7 +49,10 @@
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/cypress/"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/cypress/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
