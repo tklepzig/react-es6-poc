@@ -13,7 +13,6 @@ const config = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"],
     plugins: [
-      new CleanWebpackPlugin(["./dist"]),
       new TsconfigPathsPlugin({
         configFile: "./src/tsconfig.json"
       })
@@ -34,6 +33,7 @@ const config = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       inject: "body"
